@@ -28,6 +28,7 @@ class Equations{
             }
 
             y = e3[2]/e3[1];
+            return;
         }
 
         void calcX(){ //Calculates X
