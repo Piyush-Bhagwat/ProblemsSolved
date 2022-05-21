@@ -1,3 +1,12 @@
+/*
+ex: a = 1 3 -2 3 5 6 2 4 3
+    b= 5 7 8 (ans -15, 8, 2)
+
+ex: a= 1 1 1 3 3 4 2 1 3
+    b= 6 20 13 (3, 1, 2)
+*/
+
+
 #include<iostream>
 using namespace std;
 
