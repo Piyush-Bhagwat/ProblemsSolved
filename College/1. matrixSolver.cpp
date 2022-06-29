@@ -38,7 +38,12 @@ class Matrix {
         void display(){ //To display current Matrix
             for(int i=0; i<3; i++){
                 for(int j=0; j<3; j++){
-                    cout<<a[i][j]<<" ";
+                    if(a[i][j] == -0){
+                       cout<<"0 "; 
+                    }
+                    else{
+                        cout<<a[i][j]<<" ";
+                    }
                 }
                 cout<<" = "<<b[i]<<endl;
             }
@@ -144,7 +149,7 @@ class Matrix {
 
 main(){
     Matrix m;
-    m.read();
+    // m.read();
 
     cout<<"the given Matrix: "<<endl;
     m.display();

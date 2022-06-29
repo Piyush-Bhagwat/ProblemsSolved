@@ -149,16 +149,28 @@ class Game{
 
 class AIplayer{
     private:
+        char player='O', opponent='X';
+        int boardScore;
 
     public:
+        void setPlayer(char p){
+            if(p == 'X'){
+                player = 'X';
+                opponent = 'O';
+            }
+            else if (p == 'O'){
+                player = 'O';
+                opponent='X';
+            }
+        }
 
-    int makeMove(){
+        
 
-        int sth = rand()%9 + 1;
+        int makeMove(){
+            int sth = rand()%9 + 1;
+        }
 
-    }
 };
-
 
 void instructions(){
     cout<<"First Player is always'x'"<<endl;
