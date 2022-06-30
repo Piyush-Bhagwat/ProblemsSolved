@@ -259,6 +259,7 @@ class AIplayer{
                         }
                     }
                 }
+                return best;
             }
 
         }
@@ -308,8 +309,6 @@ void instructions(){
     cout<<"Enter postion between 1 to 9"<<endl;
     cout<<"Enter 0 to end game"<<endl;
 }
-
-
 
 main()
 {
