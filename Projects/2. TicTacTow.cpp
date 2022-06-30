@@ -1,3 +1,6 @@
+//X Human
+//O AI
+
 #include<iostream>
 #include<bits/stdc++.h>
 using namespace std;
@@ -7,7 +10,6 @@ class Game{
         char board[3][3];
         char player = 'X';
         char defaultChar = '_';
-
 
     public:
 
@@ -19,26 +21,40 @@ class Game{
             }
         }
 
+        char getAt(int r, int c){
+            return board[r][c];
+        }
+
+        void setAt(int r, int c, char k){
+            board[r][c] = k;
+        }
+
         void displayBoard()
         {
             int count=1;
             for(int i=0; i<3; i++){
+                cout<<"|";
                 for(int j=0; j<3; j++){
                     if(board[i][j] == defaultChar){
-                        cout<<count<<" ";
+                        cout<<count;
                     }
                     else{
-                        cout<<board[i][j]<<" ";
+                        cout<<board[i][j];
                     }
+                    cout<<" | ";
                     count++;
                 }
-                cout<<endl;
+                cout<<endl<<endl;
             }
             cout<<endl;
         }
 
         char getPlayer(){
             return player;
+        }
+
+        char defChar(){
+            return defaultChar;
         }
 
         void changePlayer(){
@@ -131,7 +147,7 @@ class Game{
             return 0;
         }
 
-        bool matchTie(){
+        bool isBoardFilled(){
 
             for(int i=0; i<3; i++){
                 for(int j=0; j<3; j++){
@@ -150,7 +166,7 @@ class Game{
 class AIplayer{
     private:
         char player='O', opponent='X';
-        int boardScore;
+        int boardScore, row, col;
 
     public:
         void setPlayer(char p){
@@ -164,10 +180,125 @@ class AIplayer{
             }
         }
 
-        
+        int evaluate(Game g){
+            //for col
+            if(g.digSame()){
+                if(g.getAt(1,1) == opponent){
+                    return -10;
+                }
+                else if(g.getAt(1, 1) == player){
+                    return 10;
+                }
+            }
 
-        int makeMove(){
-            int sth = rand()%9 + 1;
+            //for row
+            for(int i=0; i<3; i++){
+                if(g.getAt(i, 0) == g.getAt(i, 1) && g.getAt(i, 1) == g.getAt(i, 2)){
+                    if(g.getAt(i, 1) == opponent) {
+                        return -10;
+                    }
+                    else if(g.getAt(i, 1) == player){
+                        return 10;
+                    }
+                }
+            }
+
+            //for col
+            for(int i=0; i<3; i++){
+                if(g.getAt(0, i)==g.getAt(1, i) && g.getAt(1, i)==g.getAt(2, i)){
+                    if(g.getAt(0, i)==opponent){
+                        return -10;
+                    }
+                    else if(g.getAt(0, i)==player){
+                        return 10;
+                    }
+                }
+            }
+            return 0;
+        }
+        
+        int minimax(Game g, int depth, bool aiTurn){
+            int score = evaluate(g);
+
+            if(score == 10){
+                return score - depth;
+            }
+            if(score == -10){
+                return score + depth;
+            }
+
+            if(g.isBoardFilled()){
+                return 0;
+            }
+
+            if(aiTurn){
+                int best = -10000;
+                for(int i=0; i<3; i++){
+                    for(int j=0; j<3; j++){
+                        if(g.getAt(i, j) == g.defChar()){
+                            g.setAt(i, j, player);
+
+                            best = max(best, minimax(g, depth+1, !aiTurn));
+
+                            g.setAt(i, j, g.defChar());
+                        }
+                    }
+                }
+                return best;
+            }
+            else{
+                int best = 10000;
+                for(int i=0; i<3; i++){
+                    for(int j=0; j<3; j++){
+                        if(g.getAt(i, j) == g.defChar()){
+                            g.setAt(i, j, opponent);
+
+                            best = min(best, minimax(g, depth+1, !aiTurn));
+
+                            g.setAt(i, j, g.defChar());
+                        }
+                    }
+                }
+            }
+
+        }
+
+        void bestMove(Game g){
+           row = -1, col = -1; 
+           int best = -10000;
+
+            for(int i=0; i<3; i++){
+                for(int j=0; j<3; j++){
+                    if(g.getAt(i, j) == g.defChar()){
+                        g.setAt(i, j, player);
+
+                        int moveVal = minimax(g, 0, false);
+
+                        g.setAt(i, j, g.defChar());
+
+                        if(moveVal>best){
+                            row = i;
+                            col = j;
+                            best = moveVal;
+                        }
+                    }
+                }
+            }
+        }
+
+        int makeMove(Game g){
+            bestMove(g);
+            int tr, tc;
+
+            for(int i=1; i<=9; i++){
+                tr = (i-1)/3;
+                tc = (i-1)%3;
+
+                if(row==tr && col==tc){
+                    return i;
+                }
+                
+            }
         }
 
 };
@@ -195,7 +326,7 @@ main()
             curInp = p.getInput();
         }
         else{
-            curInp = a.makeMove();
+            curInp = a.makeMove(p);
             cout<<"Computer moved "<<curInp<<endl;
         }
 
@@ -214,7 +345,7 @@ main()
             break;
         }
 
-        if(p.matchTie()){
+        if(p.isBoardFilled()){
             cout<<"Match Tie";
             break;
         }
