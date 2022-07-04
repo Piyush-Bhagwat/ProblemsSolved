@@ -10,6 +10,7 @@ class Game{
         char board[3][3];
         char player = 'X';
         char defaultChar = '_';
+        int move;
 
     public:
 
@@ -19,6 +20,11 @@ class Game{
                     board[i][j] = defaultChar;
                 }
             }
+            move=0;
+        }
+
+        int getMove(){
+            return move;
         }
 
         char getAt(int r, int c){
@@ -31,18 +37,10 @@ class Game{
 
         void displayBoard()
         {
-            int count=1;
             for(int i=0; i<3; i++){
-                cout<<"|";
+                cout<<"| ";
                 for(int j=0; j<3; j++){
-                    if(board[i][j] == defaultChar){
-                        cout<<count;
-                    }
-                    else{
-                        cout<<board[i][j];
-                    }
-                    cout<<" | ";
-                    count++;
+                        cout<<board[i][j]<<" | ";
                 }
                 cout<<endl<<endl;
             }
@@ -86,7 +84,7 @@ class Game{
             }
 
             board[row][col] = player;
-
+            move++;
             return 1;
         }
 
@@ -162,11 +160,10 @@ class Game{
 
 };
 
-
 class AIplayer{
     private:
         char player='O', opponent='X';
-        int boardScore, row, col;
+        int row, col;
 
     public:
         void setPlayer(char p){
@@ -181,7 +178,7 @@ class AIplayer{
         }
 
         int evaluate(Game g){
-            //for col
+            //for dig
             if(g.digSame()){
                 if(g.getAt(1,1) == opponent){
                     return -10;
@@ -288,6 +285,13 @@ class AIplayer{
         }
 
         int makeMove(Game g){
+            if (g.getMove()<3){
+                int a;
+                srand ( time(NULL) );
+                a = rand();
+                cout<<"rand"<<endl;
+                return (1 + (a % 9));
+            }
             bestMove(g);
             int tr, tc;
 
