@@ -149,7 +149,7 @@ class Matrix {
 
 main(){
     Matrix m;
-    // m.read();
+    m.read();
 
     cout<<"the given Matrix: "<<endl;
     m.display();
