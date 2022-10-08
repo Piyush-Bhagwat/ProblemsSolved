@@ -3,6 +3,9 @@
 #include<utility>
 using namespace std;
 
+#define INT_MAX = 1000;
+#define INT_MIN = -1000;
+
 class Problem{// Magic is happening here
     private:
     int row, col;
@@ -195,9 +198,6 @@ class Problem{// Magic is happening here
         }
 
         void operation(int r, int c){ //Main operation on indivual Cells
-            // pair<int,int> NWC = getNWC();
-            // int r = NWC.first, c= NWC.second;
-
             int Allocation = getAllocations(r, c);
             ans += (Allocation * data[r][c]);
 
