@@ -3,8 +3,8 @@
 #include<utility>
 using namespace std;
 
-#define INT_MAX = 1000;
-#define INT_MIN = -1000;
+#define MAX_NUM 1000
+#define MIN_NUM -1000
 
 class Problem{// Magic is happening here
     private:
@@ -229,7 +229,7 @@ class Problem{// Magic is happening here
         }
 
         pair<int, int> LCMCell(){
-            int min = INT_MAX;
+            int min = MAX_NUM;
             int prevAlloc;
             int prevRemai;
             int r, c;
@@ -301,7 +301,7 @@ class Problem{// Magic is happening here
         }
 
         int getColMinima(int c){ //return the pos of the least element in the column
-            int min = INT_MAX;
+            int min = MAX_NUM;
             int r = 0;
             int prevAlloc;
             int preRemain;
@@ -335,7 +335,7 @@ class Problem{// Magic is happening here
         } 
 
         int getRowMinima(int r){// return the pos of the least element ii the row
-            int min = INT_MAX;
+            int min = MAX_NUM;
             int c = 0;
             int prevAlloc;
             int preRemain;
@@ -421,7 +421,7 @@ class Problem{// Magic is happening here
                 return;
             }
 
-            int min1= INT_MAX, min2=INT_MAX;
+            int min1= MAX_NUM, min2=MAX_NUM;
             for(int i=0; i<col-1; i++){
                 if(data[r][i] == -1) continue;
                 if(data[r][i]<min1){
@@ -448,7 +448,7 @@ class Problem{// Magic is happening here
                 dPenalty.push_back(-1);
                 return;
             }
-            int min1= INT_MAX, min2=INT_MAX;
+            int min1= MAX_NUM, min2=MAX_NUM;
             for(int i=0; i<row-1; i++){
                 if(data[i][c] == -1) continue;
                 if(data[i][c]<min1){
@@ -471,7 +471,7 @@ class Problem{// Magic is happening here
         }
 
         pair<char, int> getPenalty(){ // returns the maxPenulty
-            int maxPen = INT_MIN;
+            int maxPen = MIN_NUM;
             int prevAlloc;
             int curAllo;
 
